@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="120" fill="#EE7B4D"/>
+  <!-- cat face -->
+  <g fill="#FDF8F3">
+    <!-- ears -->
+    <path d="M148 178 L128 96 L208 138 Z"/>
+    <path d="M364 178 L384 96 L304 138 Z"/>
+    <!-- head -->
+    <circle cx="256" cy="268" r="128"/>
+  </g>
+  <!-- eyes -->
+  <g fill="#2D2A26">
+    <circle cx="212" cy="252" r="14"/>
+    <circle cx="300" cy="252" r="14"/>
+  </g>
+  <!-- nose -->
+  <path d="M244 296 L268 296 L256 312 Z" fill="#EE7B4D"/>
+  <!-- whiskers -->
+  <g stroke="#2D2A26" stroke-width="8" stroke-linecap="round">
+    <line x1="150" y1="290" x2="106" y2="282"/>
+    <line x1="150" y1="312" x2="108" y2="322"/>
+    <line x1="362" y1="290" x2="406" y2="282"/>
+    <line x1="362" y1="312" x2="404" y2="322"/>
+  </g>
+</svg>
