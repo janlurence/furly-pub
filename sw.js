@@ -1,4 +1,4 @@
-const CACHE = 'furly-v2'
+const CACHE = 'furly-v3'
 const IMAGE_CACHE = 'furly-images-v1'
 const APP_SHELL = ['/', '/manifest.webmanifest', '/icons/furly.svg']
 
@@ -26,10 +26,12 @@ self.addEventListener('fetch', (e) => {
         cache.match(e.request).then(
           (cached) =>
             cached ||
-            fetch(e.request).then((res) => {
-              if (res.ok || res.type === 'opaque') cache.put(e.request, res.clone())
-              return res
-            })
+            fetch(e.request)
+              .then((res) => {
+                if (res.ok || res.type === 'opaque') cache.put(e.request, res.clone())
+                return res
+              })
+              .catch(() => Response.error())
         )
       )
     )
@@ -54,13 +56,17 @@ self.addEventListener('fetch', (e) => {
     caches.match(e.request).then(
       (cached) =>
         cached ||
-        fetch(e.request).then((res) => {
-          if (res.ok && (url.pathname.startsWith('/assets/') || url.pathname.startsWith('/icons/'))) {
-            const copy = res.clone()
-            caches.open(CACHE).then((c) => c.put(e.request, copy))
-          }
-          return res
-        })
+        fetch(e.request)
+          .then((res) => {
+            if (res.ok && (url.pathname.startsWith('/assets/') || url.pathname.startsWith('/icons/'))) {
+              const copy = res.clone()
+              caches.open(CACHE).then((c) => c.put(e.request, copy))
+            }
+            return res
+          })
+          // Offline / interrupted asset fetch: fail the single request quietly
+          // instead of surfacing an uncaught rejection from the worker.
+          .catch(() => Response.error())
     )
   )
 })
